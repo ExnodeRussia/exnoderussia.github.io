@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Не индексировать служебные страницы (если появятся)
+Disallow: /tmp/
+Disallow: /drafts/
+
+# Указываем карту сайта
+Sitemap: https://exnoderussia.github.io/sitemap.xml
