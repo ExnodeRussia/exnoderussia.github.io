@@ -1,0 +1,20 @@
+name: Notify IndexNow
+
+on:
+  push:
+    paths:
+      - 'How-to-exchange-USDT/**'   # путь к твоему проекту
+      - 'data.json'                 # путь к JSON-файлу
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Send IndexNow request
+        run: |
+          curl -X POST "https://api.indexnow.org/indexnow" \
+               -H "Content-Type: application/json" \
+               -d @data.json
