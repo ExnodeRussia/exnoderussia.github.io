@@ -3,8 +3,8 @@ name: Notify IndexNow
 on:
   push:
     paths:
-      - 'How-to-exchange-USDT/**'   # путь к твоему проекту
-      - 'data.json'                 # путь к JSON-файлу
+      - 'kriptoobmennik-v-Moskve-top-4-bezopasnyh-platform-po-otzyvam/**'   # путь к твоему проекту
+      - 'ExnodeIndexNow.json'                 # путь к JSON-файлу
 
 jobs:
   indexnow:
