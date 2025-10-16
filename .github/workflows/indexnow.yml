@@ -3,7 +3,7 @@ name: Notify IndexNow
 on:
   push:
     paths:
-      - '
+      - 'zarubezhnye-karty-onlain-gde-oformit-virtualnuyu-kartu-i-kak-eyu-platit/**'
       - 'kriptoobmennik-v-Moskve-top-4-bezopasnyh-platform-po-otzyvam/**'   # путь к твоему проекту
       - 'ExnodeIndexNow.json'                 # путь к JSON-файлу
 
