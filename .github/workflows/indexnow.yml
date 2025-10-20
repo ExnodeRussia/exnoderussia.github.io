@@ -1,21 +1,24 @@
-name: NotifyIndexNow
+name: NotifyIndexNow (POST JSON)
 
 on:
   push:
-    paths:
-      - 'zarubezhnye-karty-onlain-gde-oformit-virtualnuyu-kartu-i-kak-eyu-platit/**'
-      - 'kriptoobmennik-v-Moskve-top-4-bezopasnyh-platform-po-otzyvam/**'   # путь к твоему проекту
-      - 'ExnodeIndexNow.json'                 # путь к JSON-файлу
+    # если хочешь триггерить только при изменениях в нужных папках/файлах — верни paths
+    branches: [ "main" ]
 
 jobs:
-  indexnow:
+  indexnow-post:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Send IndexNow request
+      - name: Validate JSON exists
         run: |
-          curl -X POST "https://yandex.com/indexnow?url=https://exnoderussia.github.io" \
-               -H "Content-Type: application/json" \
-               -d @data.json
+          test -f ExnodeIndexNow.json || (echo "ExnodeIndexNow.json not found" && exit 1)
+          jq . ExnodeIndexNow.json > /dev/null || (echo "Invalid JSON" && exit 1)
+
+      - name: POST to IndexNow hub
+        run: |
+          curl -sS -X POST "https://api.indexnow.org/indexnow" \
+               -H "Content-Type: application/json; charset=utf-8" \
+               --data-binary @ExnodeIndexNow.json
