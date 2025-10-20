@@ -16,6 +16,6 @@ jobs:
 
       - name: Send IndexNow request
         run: |
-          curl -X POST "https://api.indexnow.org/indexnow" \
+          curl -X POST "https://yandex.com/indexnow?url=https://exnoderussia.github.io" \
                -H "Content-Type: application/json" \
                -d @data.json
