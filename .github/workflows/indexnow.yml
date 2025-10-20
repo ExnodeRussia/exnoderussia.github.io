@@ -1,24 +1,31 @@
-name: NotifyIndexNow (POST JSON)
+name: NotifyIndexNow (GET)
 
 on:
   push:
-    # если хочешь триггерить только при изменениях в нужных папках/файлах — верни paths
+    # срабатывает на любой пуш; если хочешь — верни paths
     branches: [ "main" ]
 
 jobs:
-  indexnow-post:
+  indexnow-get:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Validate JSON exists
+      - name: Ping Yandex IndexNow for specific URLs
+        env:
+          INDEXNOW_KEY: a1b2c3d4e5f67890123456789abcdef0   # ← ВСТАВЬ СВОЙ КЛЮЧ
         run: |
-          test -f ExnodeIndexNow.json || (echo "ExnodeIndexNow.json not found" && exit 1)
-          jq . ExnodeIndexNow.json > /dev/null || (echo "Invalid JSON" && exit 1)
+          # Список страниц к индексации (добавляй свои)
+          URLS=(
+            "https://exnoderussia.github.io/How-to-exchange-USDT/"
+            "https://exnoderussia.github.io/zarubezhnye-karty-onlain-gde-oformit-virtualnuyu-kartu-i-kak-eyu-platit/"
+            "https://exnoderussia.github.io/kriptoobmennik-v-Moskve-top-4-bezopasnyh-platform-po-otzyvam/"
+          )
 
-      - name: POST to IndexNow hub
-        run: |
-          curl -sS -X POST "https://api.indexnow.org/indexnow" \
-               -H "Content-Type: application/json; charset=utf-8" \
-               --data-binary @ExnodeIndexNow.json
+          for u in "${URLS[@]}"; do
+            echo "Submitting: $u"
+            curl -sS "https://yandex.com/indexnow?url=${u}&key=${INDEXNOW_KEY}"
+            echo ""
+          done
+
