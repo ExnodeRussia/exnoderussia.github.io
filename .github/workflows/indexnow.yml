@@ -1,4 +1,4 @@
-name: Notify IndexNow
+name: NotifyIndexNow
 
 on:
   push:
